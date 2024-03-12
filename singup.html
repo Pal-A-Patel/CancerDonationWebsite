@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=,a, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<a href="index.html"><button class = "btn" type="button" onclick="index.html">Back</button></a>
+<body>
+    <script>
+        function postMessage(){
+            let http = new XMLHttpRequest();
+            let message = 
+            'firstname='+document.getElementById("firstname").value +
+            '&lastname='+document.getElementById("lastname").value + 
+            '&loginid='+document.getElementById("loginid").value +
+            '&password='+document.getElementById("password").value +
+            '&loginas='+document.getElementById("loginas").value
+            http.open("POST", "/postsignup", true);
+            http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            http.send(message);
+            alert("SignUp Database Updated...");
+            document.getElementById("logindetails").reset();
+        }
+
+
+    </script>
+
+   <div class="banner"><br>
+    <h1>Sign Up</h1>
+    <form id = "logindetails">
+        <div class="text_field">
+        <input id="firstname" type = "text" placeholder="firstname">
+        </div>
+        <div class = "text">
+        <input id = "lastname" type = "text" placeholder="lastname"></div>
+        <div class = "text_field">
+        <input id = "loginid" type="text" placeholder="loginid"></div>
+        <div class = "text">
+        <input id = "password" type="password" placeholder="password"></div>
+
+        <div class = "hey">
+        <label for = "loginas">Select The User:-</label><br></div>
+        <select class="read" id = "loginas">
+            <option value = "select">Select</option>
+            <option value= "Staff">Staff</option>
+            <option value = "Donor">Donor</option>
+            <option value = "Patient">Patient</option>
+        </select><br><br>
+        
+        <button class = "btn2" style="color:black;" onclick= "postMessage();"  > SignUp </button><br>
+    </form></div>
+</body>
+</html> 

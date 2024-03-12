@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+
+    <title> UPDATE PROFILE </title>
+
+</head>
+
+<body id="body">
+    <h1 >Edit</h1>
+    <p id="GFG_UP"></p>
+
+
+   
+<script type = "text/javascript">
+
+
+function update()
+{	
+    var http = new XMLHttpRequest();
+    var url = '/update';   
+    var params ='user_or_staff='+ document.getElementById("u_or_s").value+'&name=' + document.getElementById("input1").value + '&username=' + document.getElementById("input2").value+ '&password=' + document.getElementById("input3").value +'&update_what=' + document.getElementById("update_what").value;     
+    http.open('POST', url, true);
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    http.onreadystatechange = function() 
+    { 
+        if(http.readyState == 4 && http.status == 200) 
+        {
+             
+            var response = http.responseText;
+            alert(response);
+    		if (response == "Account Created successfully"){
+    			if(document.getElementById("u_or_s").value=="user") window.location.replace("user.html");
+    			else window.location.replace("staff.html");
+    		}    			
+        }
+    };
+
+    http.send(params);
+};
+
+
+
+</script>
+<p> </p>
+
+<p> PLEASE ENTER YOUR CREDENTIALS BELOW </p>
+<p> </p>
+<p> </p>
+
+<input type=button onClick="parent.location='staff.html'"
+ value='Back' style="float: left;"><br><br>
+
+
+<form  user_or_staff="user_or_staff" action="#" onsubmit=return false">
+  <label for="u_or_s">update account of? </label>
+  <select id="u_or_s" name="sort" >
+  	<option value="select">select</option>
+    <option value="donor">donor</option>
+    <option value="staff">staff</option><br>
+ 
+  </select>
+</form><br>
+
+<form  update_what="update_what" action="#" onsubmit=return false">
+  <select id="update_what" name="update_what" >
+  	<option value="select">select</option>
+    <option value="name">name</option>
+    <option value="password">password</option>
+    <option value="name_password">name & password</option>
+    <onsubmit="return false">
+  </select>
+</form>
+
+
+  <label for="username"> ENTER the username that you'd like to update the contents for:</label><br> <br>
+  <input id="input2" type="text" name="username" value=""><br> <br>
+
+
+<p> </p>
+<p>What do yoou want to change?</p>
+<p> </p>
+
+  <label  for="name"> firstname:</label><br> <br>
+  <input id="input1" type="text" name="name" value=""><br> <br>
+  
+  
+  <label  for="password"> password:</label><br> <br>
+  <input id="input3" type="text" name="password" value=""><br> <br>
+  
+  <br>
+  <button  onclick= "update()"  > update </button>
+  <br>
+
+
+</body>
+
+</html>

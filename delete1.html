@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+
+    <title> deletion page </title>
+    <link rel="stylesheet" href="delete.css">
+
+</head>
+
+
+<button class = "btn" type="button" onclick="history.go(-1)">Back</button>
+<body style="text-align:center;" 
+      id="body">
+    <div class="delete">
+      <h1 style="color: #FEF9EF;"> DELETE ACCOUNT </h1>
+      <p id="GFG_UP" style="font-size: 19px; font-weight: bold;">
+    </p>
+  </div>
+
+
+   
+<script type = "text/javascript">
+
+function delete_()
+{
+	
+    var http = new XMLHttpRequest();
+    var url = '/DeleteAccount';
+    var params ='loginas='+ document.getElementById("loginas").value+'&loginid=' + document.getElementById("input2").value;
+       
+    http.open('POST', url, true);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    http.onreadystatechange = function() 
+    { 
+        if(http.readyState == 4 && http.status == 200) 
+        {
+            var response = http.responseText;
+            alert(response);     	
+        }
+    };
+    window.location.replace("delete1.html");
+
+    http.send(params);
+};
+
+function getMessages() {
+        let http = new XMLHttpRequest()
+        http.open("GET", '/getlogin', true);
+        http.onreadystatechange = function () {
+            if (http.readyState === 4 && http.status === 200) {
+                let record = JSON.parse(http.responseText)
+                buildTable(record);
+            }
+        }
+        http.send();
+    }
+
+function buildTable(data){
+		var table = document.getElementById('Table')
+		table.innerHTML='';
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td >${data[i].firstname}</td>				
+							<td >${data[i].lastname}</td>						
+							<td >${data[i].loginid}</td>							
+							<td>${data[i].amount}</td>	
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+}
+
+
+
+
+
+</script>
+<div class="text">
+<p style="color: #FEF9EF;">Delete A an entry by username</p>
+</div>
+<div class = "full">
+<form user_or_staff="loggedinas" action="#" onsubmit=return false">
+  <div class="log">
+  <label for="loginas" style="color: #FEF9EF;">who would you wish to delete</label></div><br>
+  <select class = "read"  id="loginas" name="sort" >
+  	<option value="select">select</option>
+    <option value="donor">donor</option>
+    <option value="patient">patient</option>
+    <option value="staff">staff</option>
+
+  </select>
+</form><br>
+
+
+
+  
+  <label for="username" style="color: #FEF9EF; font-size: 20px;"> Enter Username:-</label>
+  <input id="input2" type="text" name="username" value="">
+  <button class="btnd" onclick= "delete_()"  > Delete </button>
+  <br><br>
+
+  <li style="color: #FEF9EF;">Done with Delete process?<a href="login.html">Logout</a></li>
+
+</div>
+
+<table class="content-table" style="margin-left:auto;margin-right:auto;"> 
+	
+  <tr  >
+      <th >Firstname</th>
+      <th >Lastname</th>
+      <th >LoginId</th>
+       <th>LoginAs</th>
+  </tr>
+
+  <tbody id="Table">
+      
+  </tbody>
+</table>
+
+
+
+</body>
+
+</html>

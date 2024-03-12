@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Page</title>
+    <link rel="stylesheet"  href="donate.css">
+</head>
+<script>
+    function postMessage(){
+            let http = new XMLHttpRequest();
+            let message = 
+            'firstname='+document.getElementById("firstname").value +
+            '&lastname='+document.getElementById("lastname").value + 
+            '&loginid='+document.getElementById("loginid").value +
+            '&amount='+document.getElementById("amount").value
+            http.open("POST", "/donate", true);
+            http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            http.send(message);
+            alert("donation Database Updated...");
+            document.getElementById("logindetails").reset();
+           document.getElementById("details").reset();
+           }
+</script>
+<body>   
+<a href="index.html"><button class = "btn" type="button" onclick="index.html">Back</button></a>
+<div class="banner">
+    <h1>Donate</h1>
+    <form id = "logindetails">
+        <div class="text_field">
+        <label for="firstname">First Name</label><br>
+        <input id="firstname"><br></div>
+        <div class="text">
+        <label for="lastname">Last Name</label><br>
+        <input id = "lastname"><br></div>
+        <div class="text_field">
+        <label for="loginid">Login Id</label><br>
+        <input id = "loginid"><br></div>
+        <div class = "text">
+        <label for="amount">Amount</label><br>
+        <input id = "amount"><br>
+        </div>
+        <input id="post-button" class="btn2" type="button" value="Submit" onclick="postMessage();">
+    </form>
+    </div>
+</body>
+</html>

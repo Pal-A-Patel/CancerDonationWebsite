@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=,a, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <script>
+        function postMessage(){
+            let http = new XMLHttpRequest();
+            let message = 
+            'firstname='+document.getElementById("firstname").value +
+            '&lastname='+document.getElementById("lastname").value + 
+            '&loginid='+document.getElementById("loginid").value +
+            '&password='+document.getElementById("password").value +
+            '&loginas='+document.getElementById("loginas").value
+            http.open("POST", "/postsignup", true);
+            http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            http.send(message);
+            alert("SignUp Database Updated...");
+            document.getElementById("logindetails").reset();
+        }
+
+        function login(){
+            let http = new XMLHttpRequest();
+            let message = 
+            'firstname='+document.getElementById("firstname").value +
+            '&lastname='+document.getElementById("lastname").value + 
+            '&loginid='+document.getElementById("loginid").value +
+            '&password='+document.getElementById("password").value +
+            '&loginas='+document.getElementById("loginas").value
+            http.open("/POST", "/postlogin", true);
+            http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            http.send(message);
+            alert
+            http.onreadystatechange = function(){
+                if(http.readyState == 4 && http.status == 200){
+                    var response = http.responseText;
+                    if(response == "1"){
+                        if(document.getElementById("loginas").value == "Staff"){
+                            window.location.href = 'staff.html';
+                        }
+                    }
+                
+                }
+            }
+            http.send(params);
+            
+        }
+    </script>
+    <a href="#" onclick="history.go(-1)"><li>Back</li></a><br>
+    <form id = "logindetails">
+        <label for="firstname">First Name</label><br>
+        <input id="firstname"><br>
+        <label for="lastname">Last Name</label><br>
+        <input id = "lastname"><br>
+        <label for="loginid">Login Id</label><br>
+        <input id = "loginid"><br>
+        <label for="password">Password</label><br>
+        <input id = "password"><br>
+        <input id="post-button" type="button" value="Post" onclick="postMessage();">
+    </form>
+    <form id = "user"><br>
+        <label for = "loginas">Select The User:-</label><br>
+        <select id = "loginas">
+            <option value = "select">Select</option>
+            <option value= "Staff">Staff</option>
+            <option value = "Donor">Donor</option>
+            <option value = "Patient">Patient</option>
+        </select>
+    </form>
+    <input id = "loginbutton" type = "button" value = "login" onclick="login()">
+</body>
+</html> 

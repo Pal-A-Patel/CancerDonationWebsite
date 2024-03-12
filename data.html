@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="data.css">
+<head>
+<h4>Post-Message History:- </h4>
+<form id="sortDataForm">
+    <label for="order">Choose Order:</label>
+    <select id="order">
+        <option value = "Select">Select</option>
+        <option value="ascending">Ascending</option>
+        <option value="descending">Descending</option>
+    </select>
+    <label for="column">Choose Column:</label>
+    <select id="column">
+        <option vallue="select">Select</option>
+        <option value="firstname">firstname</option>
+        <option value="lastname">lastname</option>
+        <option value="loginid">loginid</option>
+        <option value="loginas">loginas</option>
+    </select>
+    <br>
+    <br>
+    <input id="sort-button" type="button" value="Sort" onclick="getFilteredData()">
+</form>
+<br>
+<div id="list">
+</div>
+<table class="content-table" style="margin-left:auto;margin-right:auto;"> 
+	
+    <tr  >
+        <th >Firstname</th>
+        <th >Lastname</th>
+        <th >LoginId</th>
+         <th>LoginAs</th>
+    </tr>
+
+    <tbody id="Table">
+        
+    </tbody>
+</table>
+</body>
+<script>
+
+    window.onload = () => {
+        getMessages()
+    }
+
+    function SendMessages() {
+        let http = new XMLHttpRequest()
+        let message =
+            'firstname=' + document.getElementById("firstname").value +
+            '&lastname=' + document.getElementById("lastname").value
+        http.open("POST", "/postMessage", true)
+        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+        http.send(message);
+        alert("Database updated")
+        document.getElementById("post-collection").reset()
+        document.getElementById("list").innerHTML = ""
+        getMessages()
+    }
+
+    function buildTable(data){
+		var table = document.getElementById('Table')
+		table.innerHTML='';
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td >${data[i].firstname}</td>				
+							<td >${data[i].lastname}</td>						
+							<td >${data[i].loginid}</td>							
+							<td>${data[i].loginas}</td>	
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+}
+
+
+
+    function getFilteredData() {
+        let http = new XMLHttpRequest()
+        let order = document.getElementById("order").value
+        let column = document.getElementById("column").value
+        let post = 'order=' + order + '&column=' + column
+        document.getElementById("sortDataForm").reset()
+        console.log(post)
+        http.open("POST", "/sortMessages", true)
+        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+        http.send(post);
+        document.getElementById("list").innerHTML = ""
+        http.open("GET", '/sortedLogs', true);
+        http.onreadystatechange = function () {
+            if (http.readyState === 4 && http.status === 200) {
+                let record = JSON.parse(http.responseText)
+                buildTable(record);
+            }
+        }
+        http.send();
+    }
+</script>
+</html>

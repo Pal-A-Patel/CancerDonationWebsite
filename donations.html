@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sort</title>
+    <link rel="stylesheet" href="donations.css">
+</head>
+<button class = "btn" type="button" onclick="history.go(-1)">Back</button>
+<body><br><br>
+    <h1>Donation For Cancer Society</h1><br>
+<table class="content-table" style="margin-left:auto;margin-right:auto;"> 
+	
+    <tr  >
+        <th >Firstname</th>
+        <th >Lastname</th>
+        <th >LoginId</th>
+         <th>Amount</th>
+    </tr>
+
+    <tbody id="Table">
+        
+    </tbody>
+</table>
+</body>
+<script type = "text/javascript">
+    window.onload = () => {
+        getMessages()
+    }
+
+    function buildTable(data){
+		var table = document.getElementById('Table')
+		table.innerHTML='';
+
+		for (var i = 0; i < data.length; i++){
+			var row = `<tr>
+							<td >${data[i].firstname}</td>				
+							<td >${data[i].lastname}</td>						
+							<td >${data[i].loginid}</td>							
+							<td>${data[i].amount}</td>	
+					  </tr>`
+			table.innerHTML += row
+
+
+		}
+}
+
+    function getMessages() {
+        let http = new XMLHttpRequest()
+        http.open("GET", '/donations', true);
+        http.onreadystatechange = function () {
+            if (http.readyState === 4 && http.status === 200) {
+                let record = JSON.parse(http.responseText)
+                buildTable(record);
+            }
+        }
+        http.send();
+    }
+
+
+</script>
+</html>
